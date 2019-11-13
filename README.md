@@ -1,6 +1,6 @@
 # Docker Hetzner Robot API Mock
 
-Mock server that implements [Hetzner Robot API](https://robot.your-server.de/doc/webservice/en.html).
+Mock server based on [JSON Server](https://github.com/typicode/json-server) that implements [Hetzner Robot API](https://robot.your-server.de/doc/webservice/en.html).
 
 ## Development
 
