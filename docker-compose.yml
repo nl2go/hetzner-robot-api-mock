@@ -1,0 +1,8 @@
+version: '2'
+services:
+  hetzner-robot-api-mock:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true

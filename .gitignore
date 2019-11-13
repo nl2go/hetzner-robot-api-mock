@@ -1,0 +1,5 @@
+*.log
+*.retry
+/.project
+/.idea
+/.vscode
