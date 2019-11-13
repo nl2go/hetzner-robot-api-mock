@@ -38,5 +38,7 @@
             ],
             "host_key": []
         }
-    }
+    },
+    "firewall_template": [],
+    "firewall": []
 }
