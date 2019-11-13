@@ -1,1 +1,4 @@
-{}
+{
+    "/boot/123.123.123.123/rescue": "/rescue_inactive",
+    "/boot/124.124.124.124/rescue": "/rescue_active"
+}

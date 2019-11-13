@@ -1,1 +1,42 @@
-{}
+{
+    "rescue_inactive": {
+        "rescue": {
+            "server_ip": "123.123.123.123",
+            "server_number": 321,
+            "os": [
+                "linux",
+                "freebsd",
+                "vkvm"
+            ],
+            "arch": [
+                64,
+                32
+            ],
+            "active": false,
+            "password": null,
+            "authorized_key": [],
+            "host_key": []
+        }
+    },
+    "rescue_active": {
+        "rescue": {
+            "server_ip": "124.124.124.124",
+            "server_number": 69,
+            "os": "linux",
+            "arch": 64,
+            "active": true,
+            "password": "qwertz",
+            "authorized_key": [
+                {
+                    "key": {
+                        "fingerprint": "fi:ng:er:pr:in:t0:00:00:00:00:00:00:00:00:00:00",
+                        "name": "admin",
+                        "size": 4096,
+                        "type": "RSA"
+                    }
+                }
+            ],
+            "host_key": []
+        }
+    }
+}
