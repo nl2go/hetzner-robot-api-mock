@@ -1,1 +1,4 @@
-{}
+{
+  "/firewall/template": "/firewall_template",
+  "/firewall/template/:id": "/firewall_template/:id"
+}
