@@ -4,6 +4,11 @@ const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
 const bodyParser = require('body-parser')
 const custom_routes = require('./routes.json')
+const process = require('process');
+
+process.on('SIGINT', function(){
+  process.abort();
+});
 
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
