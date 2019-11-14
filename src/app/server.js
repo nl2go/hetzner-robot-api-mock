@@ -4,44 +4,79 @@ const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
 const bodyParser = require('body-parser');
 const customRoutes = require('./routes.json');
+const customIds = require('./ids.json');
 const process = require('process');
 
 function getWrappedResponseBodyWithEntityType(req, responseBody){
-  const entityType = getEntityTypeFromPath(req.url);
+  const entityType = getResourceTypeFromPath(req.url);
   const wrappedResponseBody = {};
   wrappedResponseBody[entityType] = responseBody;
   return wrappedResponseBody;
 }
 
-function isSearchRequest(path){
-  const parts = path.split('?');
-  return parts.length > 1;
-}
-
-function isCustomRoute(path){
-  const currentTarget = getPathWithoutQuery(path);
-  for(const source in customRoutes) {
-    const target = getPathWithoutQuery(customRoutes[source]);
-    if (currentTarget === target) {
-      return true
+function isResourceIdRequest(path){
+  for(const source in customRoutes){
+    const target = customRoutes[source];
+    if(source === path || path === target){
+      return false;
     }
   }
-  return false;
+  return true;
 }
 
-function getUnwrappedResponseBody(responseBody){
-  if(responseBody.length > 0){
-    return responseBody[0];
+function getResourceId(path){
+  return getPathPartFromEnd(path, 0);
+}
+
+function getResourceTypeFromPath(path){
+  if(isResourceIdRequest(path)){
+    return getPathPartFromEnd(path, 1)
   }
-  return {};
+  return getPathPartFromEnd(path, 0);
 }
 
-function getPathWithoutQuery(path){
-  return path.split('?')[0];
+function getPathPartFromEnd(path, index){
+  const pathParts =  path.split('/');
+  return pathParts[pathParts.length - index - 1];
 }
 
-function getEntityTypeFromPath(path){
-  return getPathWithoutQuery(path).split("/")[1];
+function removeInternalIdsFromResponseBody(resourceType, responseBody) {
+  if (!customIds[resourceType]) {
+    return responseBody;
+  }
+
+  if (responseBody instanceof Array) {
+    for (let i=0;i<responseBody.length;i++) {
+      delete responseBody[i].id;
+    }
+  } else {
+    delete responseBody.id;
+  }
+
+  return responseBody;
+}
+
+function isCreateOrUpdateRequest(req){
+  return req.method === 'POST' || req.method === 'PUT';
+}
+
+function isPostUpdateRequest(req){
+  const path = req.path;
+  return req.method === 'POST' && isResourceIdRequest(path);
+}
+
+function changeToPutRequest(req){
+  req.method = 'PUT';
+}
+
+function addCustomId(req){
+  const path = req.path;
+  const resourceType = getResourceTypeFromPath(path);
+  const id = getResourceId(path);
+  const customId = customIds[resourceType];
+  if(customId) {
+    req.body[customId] = id;
+  }
 }
 
 process.on('SIGINT', function(){
@@ -53,13 +88,22 @@ server.use(bodyParser.json());
 router.render = (req, res) => {
   const path = req.url;
   let responseBody = res.locals.data;
-  if(isSearchRequest(path) && isCustomRoute(path)){
-    responseBody = getUnwrappedResponseBody(responseBody);
-  }
+  let resourceType = getResourceTypeFromPath(path);
+  responseBody = removeInternalIdsFromResponseBody(resourceType, responseBody);
   responseBody = getWrappedResponseBodyWithEntityType(req,  responseBody);
-
   res.jsonp(responseBody);
 };
+
+server.use((req, res, next) => {
+  if (isCreateOrUpdateRequest(req)) {
+    if (isPostUpdateRequest(req)){
+      addCustomId(req);
+      changeToPutRequest(req);
+    }
+  }
+  next();
+});
+
 server.use(jsonServer.rewriter(customRoutes));
 server.use(middlewares);
 server.use(router);
