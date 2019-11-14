@@ -6,7 +6,7 @@ LABEL MAINTAINER=<ops@newsletter2go.com>
 
 ENV NODE_PATH=/usr/local/lib/node_modules
 
-COPY ./src/app /
+COPY ./src/app /app
 COPY ./package.json /app/package.json
 
 WORKDIR /app
