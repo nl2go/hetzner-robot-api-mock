@@ -4,6 +4,9 @@
     "whitelist_hos": true,
     "port": "main",
     "rules": {
+      "action": "accept",
+      "ip_version": "ipv4",
+      "name": "Allow all"
     }
   }
 }

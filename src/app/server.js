@@ -55,7 +55,6 @@ function isCreateOrUpdateRequest(req){
 }
 
 function isPostUpdateRequest(req){
-  const path = req.custom_path;
   return req.method === 'POST' && getResourceId(req);
 }
 
@@ -113,11 +112,11 @@ function handleHetznerRobotApiRequest(req, res, next){
       changeToPatchRequest(req);
     }
   } else if (isDeleteRequest(req)){
-    const resourceDefaults = getResourceDefaults();
+    const resourceDefaults = getResourceDefaults(req);
     if(resourceDefaults){
       setBodyToResourceDefaults(req, resourceDefaults);
       addCustomIdToRequestBody(req);
-      changeToPutRequest();
+      changeToPutRequest(req);
     }
   }
   next();
