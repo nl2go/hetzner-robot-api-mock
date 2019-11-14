@@ -3,18 +3,45 @@ const server = jsonServer.create();
 const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
 const bodyParser = require('body-parser');
-const custom_routes = require('./routes.json');
+const customRoutes = require('./routes.json');
 const process = require('process');
 
-function wrapResponseBodyWithEntityType(req, res){
+function getWrappedResponseBodyWithEntityType(req, responseBody){
   const entityType = getEntityTypeFromPath(req.url);
-  const responseBody = {};
-  responseBody[entityType] = res.locals.data;
-  res.jsonp(responseBody);
+  const wrappedResponseBody = {};
+  wrappedResponseBody[entityType] = responseBody;
+  return wrappedResponseBody;
+}
+
+function isSearchRequest(path){
+  const parts = path.split('?');
+  return parts.length > 1;
+}
+
+function isCustomRoute(path){
+  const currentTarget = getPathWithoutQuery(path);
+  for(const source in customRoutes) {
+    const target = getPathWithoutQuery(customRoutes[source]);
+    if (currentTarget === target) {
+      return true
+    }
+  }
+  return false;
+}
+
+function getUnwrappedResponseBody(responseBody){
+  if(responseBody.length > 0){
+    return responseBody[0];
+  }
+  return {};
+}
+
+function getPathWithoutQuery(path){
+  return path.split('?')[0];
 }
 
 function getEntityTypeFromPath(path){
-  return path.split("/")[1];
+  return getPathWithoutQuery(path).split("/")[1];
 }
 
 process.on('SIGINT', function(){
@@ -23,14 +50,17 @@ process.on('SIGINT', function(){
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
-server.use((req, res, next) => {
-  next()
-});
-
 router.render = (req, res) => {
-  wrapResponseBodyWithEntityType(req, res);
+  const path = req.url;
+  let responseBody = res.locals.data;
+  if(isSearchRequest(path) && isCustomRoute(path)){
+    responseBody = getUnwrappedResponseBody(responseBody);
+  }
+  responseBody = getWrappedResponseBodyWithEntityType(req,  responseBody);
+
+  res.jsonp(responseBody);
 };
-server.use(jsonServer.rewriter(custom_routes));
+server.use(jsonServer.rewriter(customRoutes));
 server.use(middlewares);
 server.use(router);
 server.listen(3000, () => {
