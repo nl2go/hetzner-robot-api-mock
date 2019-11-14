@@ -1,0 +1,9 @@
+{
+  "firewall": {
+    "status": "active",
+    "whitelist_hos": true,
+    "port": "main",
+    "rules": {
+    }
+  }
+}

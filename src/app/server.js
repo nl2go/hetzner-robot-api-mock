@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const customRoutes = require('./routes.json');
 const customIds = require('./ids.json');
 const process = require('process');
+const defaults = require('./defaults');
 
 function getWrappedResponseBodyWithEntityType(req, responseBody){
   const entityType = getResourceTypeFromPath(req.url);
@@ -17,7 +18,7 @@ function getWrappedResponseBodyWithEntityType(req, responseBody){
 function isResourceIdRequest(path){
   for(const source in customRoutes){
     const target = customRoutes[source];
-    if(source === path || path === target){
+    if(path === target){
       return false;
     }
   }
@@ -38,6 +39,10 @@ function getResourceTypeFromPath(path){
 function getPathPartFromEnd(path, index){
   const pathParts =  path.split('/');
   return pathParts[pathParts.length - index - 1];
+}
+
+function isDeleteRequest(req){
+  return req.method === 'DELETE';
 }
 
 function removeInternalIdsFromResponseBody(resourceType, responseBody) {
@@ -69,14 +74,33 @@ function changeToPatchRequest(req){
   req.method = 'PATCH';
 }
 
-function addCustomId(req){
+function changeToPutRequest(req){
+  req.method = 'PUT';
+}
+
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function addCustomIdToRequestBody(req){
   const path = req.path;
   const resourceType = getResourceTypeFromPath(path);
   const id = getResourceId(path);
-  const customId = customIds[resourceType];
-  if(customId) {
-    req.body[customId] = id;
+  const customIdName = customIds[resourceType];
+  if(customIdName) {
+    req.body.id = id;
+    req.body[customIdName] = id;
   }
+}
+
+function getResourceDefaults(req){
+  const path = req.path;
+  const resourceType = getResourceTypeFromPath(path);
+  return defaults[resourceType];
+}
+
+function setBodyToResourceDefaults(req, resourceDefaults){
+  req.body = clone(resourceDefaults);
 }
 
 process.on('SIGINT', function(){
@@ -97,8 +121,15 @@ router.render = (req, res) => {
 server.use((req, res, next) => {
   if (isCreateOrUpdateRequest(req)) {
     if (isPostUpdateRequest(req)) {
-      addCustomId(req);
+      addCustomIdToRequestBody(req);
       changeToPatchRequest(req);
+    }
+  } else if (isDeleteRequest(req)){
+    const resourceDefaults = getResourceDefaults();
+    if(resourceDefaults){
+      setBodyToResourceDefaults(req, resourceDefaults);
+      addCustomIdToRequestBody(req);
+      changeToPutRequest();
     }
   }
   next();
