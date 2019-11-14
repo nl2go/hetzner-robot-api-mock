@@ -1,6 +1,5 @@
 {
-  "/boot/123.123.123.123/rescue": "/rescue_inactive",
-  "/boot/124.124.124.124/rescue": "/rescue_active",
+  "/boot/:server_ip/rescue": "/rescue/:server_ip",
   "/firewall/template": "/firewall_template",
   "/firewall": "/firewall"
 }
