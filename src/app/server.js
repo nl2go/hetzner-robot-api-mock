@@ -65,8 +65,8 @@ function isPostUpdateRequest(req){
   return req.method === 'POST' && isResourceIdRequest(path);
 }
 
-function changeToPutRequest(req){
-  req.method = 'PUT';
+function changeToPatchRequest(req){
+  req.method = 'PATCH';
 }
 
 function addCustomId(req){
@@ -96,9 +96,9 @@ router.render = (req, res) => {
 
 server.use((req, res, next) => {
   if (isCreateOrUpdateRequest(req)) {
-    if (isPostUpdateRequest(req)){
+    if (isPostUpdateRequest(req)) {
       addCustomId(req);
-      changeToPutRequest(req);
+      changeToPatchRequest(req);
     }
   }
   next();
