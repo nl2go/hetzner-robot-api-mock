@@ -1,0 +1,10 @@
+{
+  "name": "hetzner-robot-api-mock",
+  "version": "1.0.0",
+  "description": "Provides a mock server for the Hetzner Robot API",
+  "dependencies": {
+    "body-parser": "^1.19.0"
+  },
+  "repository": "https://github.com/nl2go/docker-hetzner-robot-api-mock.git",
+  "license": "MIT"
+}
