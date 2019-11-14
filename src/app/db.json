@@ -102,52 +102,6 @@
           }
         ]
       }
-    },
-    {
-      "name": "My new template",
-      "whitelist_hos": "true",
-      "is_defult": "false",
-      "rules": {
-        "input": [
-          {
-            "name": "rule 1",
-            "ip_version": "ipv4",
-            "src_ip": "1.1.1.1",
-            "dst_port": "80",
-            "action": "accept"
-          },
-          {
-            "name": "Allow MySQL",
-            "ip_version": "ipv4",
-            "dst_port": "3306",
-            "action": "accept"
-          }
-        ]
-      },
-      "id": 4
-    },
-    {
-      "name": "My new template",
-      "whitelist_hos": "true",
-      "is_defult": "false",
-      "rules": {
-        "input": [
-          {
-            "name": "rule 1",
-            "ip_version": "ipv4",
-            "src_ip": "1.1.1.1",
-            "dst_port": "80",
-            "action": "accept"
-          },
-          {
-            "name": "Allow MySQL",
-            "ip_version": "ipv4",
-            "dst_port": "3306",
-            "action": "accept"
-          }
-        ]
-      },
-      "id": 5
     }
   ],
   "firewall": [
