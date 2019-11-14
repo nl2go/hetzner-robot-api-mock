@@ -1,5 +1,7 @@
 {
-  "/boot/:server_ip/rescue": "/rescue/:server_ip",
+  "/boot/:id/rescue": "/rescue/:id",
   "/firewall/template": "/firewall_template",
-  "/firewall": "/firewall"
+  "/firewall/template/:id": "/firewall_template/:id",
+  "/firewall": "/firewall",
+  "/firewall/:id": "/firewall/:id"
 }

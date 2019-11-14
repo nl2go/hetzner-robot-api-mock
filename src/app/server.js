@@ -9,28 +9,16 @@ const process = require('process');
 const defaults = require('./defaults');
 
 function getWrappedResponseBodyWithEntityType(req, responseBody){
-  const entityType = getResourceTypeFromPath(req.url);
+  const entityType = getResourceType(req);
   const wrappedResponseBody = {};
   wrappedResponseBody[entityType] = responseBody;
   return wrappedResponseBody;
 }
 
-function isResourceIdRequest(path){
-  for(const source in customRoutes){
-    const target = customRoutes[source];
-    if(path === target){
-      return false;
-    }
-  }
-  return true;
-}
-
-function getResourceId(path){
-  return getPathPartFromEnd(path, 0);
-}
-
-function getResourceTypeFromPath(path){
-  if(isResourceIdRequest(path)){
+function getResourceType(req){
+  const resourceId = getResourceId(req);
+  const path = req.custom_path;
+  if(resourceId){
     return getPathPartFromEnd(path, 1)
   }
   return getPathPartFromEnd(path, 0);
@@ -50,15 +38,16 @@ function removeInternalIdsFromResponseBody(resourceType, responseBody) {
     return responseBody;
   }
 
-  if (responseBody instanceof Array) {
-    for (let i=0;i<responseBody.length;i++) {
-      delete responseBody[i].id;
+  const responseBodyClone = clone(responseBody);
+  if (responseBodyClone instanceof Array) {
+    for (let i=0;i<responseBodyClone.length;i++) {
+      delete responseBodyClone[i].id;
     }
   } else {
-    delete responseBody.id;
+    delete responseBodyClone.id;
   }
 
-  return responseBody;
+  return responseBodyClone;
 }
 
 function isCreateOrUpdateRequest(req){
@@ -66,8 +55,8 @@ function isCreateOrUpdateRequest(req){
 }
 
 function isPostUpdateRequest(req){
-  const path = req.path;
-  return req.method === 'POST' && isResourceIdRequest(path);
+  const path = req.custom_path;
+  return req.method === 'POST' && getResourceId(req);
 }
 
 function changeToPatchRequest(req){
@@ -82,20 +71,24 @@ function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
+function getResourceId(req){
+  return req.custom_params ? req.custom_params.id : undefined;
+}
+
 function addCustomIdToRequestBody(req){
-  const path = req.path;
-  const resourceType = getResourceTypeFromPath(path);
-  const id = getResourceId(path);
+  const resourceType = getResourceType(req);
+  const id = getResourceId(req);
   const customIdName = customIds[resourceType];
+  console.log(resourceType, customIdName)
   if(customIdName) {
+    console.log("set custom id", id);
     req.body.id = id;
     req.body[customIdName] = id;
   }
 }
 
 function getResourceDefaults(req){
-  const path = req.path;
-  const resourceType = getResourceTypeFromPath(path);
+  const resourceType = getResourceType(req);
   return defaults[resourceType];
 }
 
@@ -103,22 +96,17 @@ function setBodyToResourceDefaults(req, resourceDefaults){
   req.body = clone(resourceDefaults);
 }
 
-process.on('SIGINT', function(){
-  process.abort();
-});
+function applyRequestMiddlewareToCustomRoutes(){
+  for(const source in customRoutes){
+    const target = customRoutes[source];
+    server.use(target, handleHetznerRobotApiRequest);
+  }
+}
 
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
-router.render = (req, res) => {
-  const path = req.url;
-  let responseBody = res.locals.data;
-  let resourceType = getResourceTypeFromPath(path);
-  responseBody = removeInternalIdsFromResponseBody(resourceType, responseBody);
-  responseBody = getWrappedResponseBodyWithEntityType(req,  responseBody);
-  res.jsonp(responseBody);
-};
+function handleHetznerRobotApiRequest(req, res, next){
+  req.custom_params = req.params;
+  req.custom_path = req.baseUrl;
 
-server.use((req, res, next) => {
   if (isCreateOrUpdateRequest(req)) {
     if (isPostUpdateRequest(req)) {
       addCustomIdToRequestBody(req);
@@ -133,9 +121,22 @@ server.use((req, res, next) => {
     }
   }
   next();
-});
+}
 
+process.on('SIGINT', function(){
+  process.abort();
+});
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
+router.render = (req, res) => {
+  let responseBody = res.locals.data;
+  let resourceType = getResourceType(req);
+  responseBody = removeInternalIdsFromResponseBody(resourceType, responseBody);
+  responseBody = getWrappedResponseBodyWithEntityType(req,  responseBody);
+  res.jsonp(responseBody);
+};
 server.use(jsonServer.rewriter(customRoutes));
+applyRequestMiddlewareToCustomRoutes();
 server.use(middlewares);
 server.use(router);
 server.listen(3000, () => {

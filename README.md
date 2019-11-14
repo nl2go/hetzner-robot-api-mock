@@ -29,8 +29,8 @@ curl -u user:password http://localhost:3000/firewall/template \
 
 ### Configure Firewall
 ```
-curl -u user:password http://localhost:3000/firewall/123.123.123.123 \
---data-urlencode 'status=active' \
+curl -u user:password http://localhost:3000/firewall/111.111.111.111 \
+--data-urlencode 'status=disabled' \
 --data-urlencode 'whitelist_hos=true' \
 --data-urlencode 'rules[input][0][name]=rule 1' \
 --data-urlencode 'rules[input][0][ip_version]=ipv4' \
