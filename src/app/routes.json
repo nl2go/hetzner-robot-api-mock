@@ -1,4 +1,5 @@
 {
+  "/boot/rescue": "/rescue",
   "/boot/:id/rescue": "/rescue/:id",
   "/firewall/template": "/firewall_template",
   "/firewall/template/:id": "/firewall_template/:id",

@@ -76,11 +76,13 @@ function getResourceId(req){
 
 function addCustomIdToRequestBody(req){
   const resourceType = getResourceType(req);
-  const id = getResourceId(req);
   const customIdName = customIds[resourceType];
-  console.log(resourceType, customIdName)
+  let id = getResourceId(req);
+
   if(customIdName) {
-    console.log("set custom id", id);
+    if(!id){
+      id = req.body[customIdName];
+    }
     req.body.id = id;
     req.body[customIdName] = id;
   }
@@ -107,8 +109,8 @@ function handleHetznerRobotApiRequest(req, res, next){
   req.custom_path = req.baseUrl;
 
   if (isCreateOrUpdateRequest(req)) {
+    addCustomIdToRequestBody(req);
     if (isPostUpdateRequest(req)) {
-      addCustomIdToRequestBody(req);
       changeToPatchRequest(req);
     }
   } else if (isDeleteRequest(req)){
