@@ -3,9 +3,5 @@ services:
   hetzner-robot-api-mock:
     build:
       context: ./
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./node_modules:/app/node_modules
-      - ./src/app:/app
     ports:
       - "3000:3000"

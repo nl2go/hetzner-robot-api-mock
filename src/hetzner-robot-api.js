@@ -1,11 +1,10 @@
 const jsonServer = require('json-server');
 const server = jsonServer.create();
-const router = jsonServer.router('db.json');
+const defaultRouter = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
 const bodyParser = require('body-parser');
 const customRoutes = require('./routes.json');
 const customIds = require('./ids.json');
-const process = require('process');
 const defaults = require('./defaults');
 
 function getWrappedResponseBodyWithEntityType(req, responseBody){
@@ -124,22 +123,28 @@ function handleHetznerRobotApiRequest(req, res, next){
   next();
 }
 
-process.on('SIGINT', function(){
-  process.abort();
-});
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
-router.render = (req, res) => {
-  let responseBody = res.locals.data;
-  let resourceType = getResourceType(req);
-  responseBody = removeInternalIdsFromResponseBody(resourceType, responseBody);
-  responseBody = getWrappedResponseBodyWithEntityType(req,  responseBody);
-  res.jsonp(responseBody);
+function init(router){
+  if(!router){
+    router = defaultRouter;
+  }
+  server.use(bodyParser.urlencoded({ extended: true }));
+  server.use(bodyParser.json());
+  router.render = (req, res) => {
+    let responseBody = res.locals.data;
+    let resourceType = getResourceType(req);
+    responseBody = removeInternalIdsFromResponseBody(resourceType, responseBody);
+    responseBody = getWrappedResponseBodyWithEntityType(req,  responseBody);
+    res.jsonp(responseBody);
+  };
+  server.use(jsonServer.rewriter(customRoutes));
+  applyRequestMiddlewareToCustomRoutes();
+  server.use(middlewares);
+  server.use(router);
+}
+
+exports.listen = function(port, router){
+  init(router);
+  return server.listen(port, () => {
+    console.log('Hetzner Robot API Mock is running')
+  });
 };
-server.use(jsonServer.rewriter(customRoutes));
-applyRequestMiddlewareToCustomRoutes();
-server.use(middlewares);
-server.use(router);
-server.listen(3000, () => {
-  console.log('Hetzner Robot API Mock is running')
-});
