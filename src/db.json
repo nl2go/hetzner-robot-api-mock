@@ -37,23 +37,6 @@
         }
       ],
       "host_key": []
-    },
-    {
-      "name": "My new 1",
-      "server_ip": "111.111.111.111",
-      "is_default": "false",
-      "rules": {
-        "input": [
-          {
-            "name": "rule 1",
-            "ip_version": "ipv4",
-            "src_ip": "1.1.1.1",
-            "dst_port": "80",
-            "action": "accept"
-          }
-        ]
-      },
-      "id": "111.111.111.111"
     }
   ],
   "firewall_template": [

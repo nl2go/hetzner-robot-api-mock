@@ -1,18 +1,22 @@
-ARG JSON_SERVER_VERSION=0.15.1
+ARG NODE_VERSION=13.1.0
 
-FROM nl2go/json-server:$JSON_SERVER_VERSION
+FROM node:$NODE_VERSION-alpine
 
 LABEL MAINTAINER=<ops@newsletter2go.com>
 
-ENV NODE_PATH=/usr/local/lib/node_modules
-
-COPY ./src/app /app
+COPY ./src/ /app/src
+COPY ./test/ /app/test
 COPY ./package.json /app/package.json
+COPY ./package-lock.json /app/package-lock.json
 
 WORKDIR /app
 
-RUN npm install
+RUN npm install \
+  && npm test \
+  && npm prune --production
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+WORKDIR /app/src
+
+CMD ["node", "index.js"]

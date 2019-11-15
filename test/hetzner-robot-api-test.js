@@ -1,4 +1,4 @@
-const hetznerRobotApi = require('../src/app/hetzner-robot-api');
+const hetznerRobotApi = require('../src/hetzner-robot-api');
 const databaseFilePath = './test/db.json';
 const jsonServer = require('json-server');
 const mocha = require('mocha');

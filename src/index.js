@@ -1,4 +1,4 @@
-const hetznerRobotApi = require('hetzner-robot-api');
+const hetznerRobotApi = require('./hetzner-robot-api');
 const process = require('process');
 
 const server = hetznerRobotApi.listen(3000);
