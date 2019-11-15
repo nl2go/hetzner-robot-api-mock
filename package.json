@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "Provides a mock server for the Hetzner Robot API",
   "dependencies": {
-    "body-parser": "^1.19.0"
+    "body-parser": "^1.19.0",
+    "json-server": "^0.15.1",
+    "mocha": "^6.2.2",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
   },
   "repository": "https://github.com/nl2go/docker-hetzner-robot-api-mock.git",
   "license": "MIT"

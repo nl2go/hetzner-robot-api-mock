@@ -1,0 +1,433 @@
+{
+  "firewall_template": [
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all",
+            "dst_ip": "",
+            "src_ip": "",
+            "dst_port": "",
+            "src_port": "",
+            "protocol": "",
+            "tcp_flags": ""
+          }
+        ]
+      },
+      "id": 1
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all",
+            "dst_ip": "",
+            "src_ip": "",
+            "dst_port": "",
+            "src_port": "",
+            "protocol": "",
+            "tcp_flags": ""
+          }
+        ]
+      },
+      "id": 2
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all",
+            "dst_ip": "",
+            "src_ip": "",
+            "dst_port": "",
+            "src_port": "",
+            "protocol": "",
+            "tcp_flags": ""
+          }
+        ]
+      },
+      "id": 3
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all",
+            "dst_ip": "",
+            "src_ip": "",
+            "dst_port": "",
+            "src_port": "",
+            "protocol": "",
+            "tcp_flags": ""
+          }
+        ]
+      },
+      "id": 4
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 5
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 6
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 7
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 8
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 9
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 10
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 11
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 12
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 13
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 14
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 15
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 16
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 17
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 18
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 19
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 20
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 21
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 22
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 23
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 24
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 25
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 26
+    },
+    {
+      "name": "Firewall template",
+      "whitelist_hos": "true",
+      "is_default": "false",
+      "rules": {
+        "input": [
+          {
+            "action": "accept",
+            "ip_version": "ipv4",
+            "name": "Allow all"
+          }
+        ]
+      },
+      "id": 27
+    }
+  ]
+}
