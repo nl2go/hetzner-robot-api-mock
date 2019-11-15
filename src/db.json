@@ -119,21 +119,16 @@
   ],
   "firewall": [
     {
-      "status": "disabled",
-      "whitelist_hos": "true",
+      "status": "active",
+      "whitelist_hos": true,
+      "port": "main",
       "rules": {
-        "input": [
-          {
-            "name": "rule 1",
-            "ip_version": "ipv4",
-            "src_ip": "1.1.1.1",
-            "dst_port": "80",
-            "action": "accept"
-          }
-        ]
+        "action": "accept",
+        "ip_version": "ipv4",
+        "name": "Allow all"
       },
-      "server_ip": "111.111.111.111",
-      "id": "111.111.111.111"
+      "id": "111.111.111.111",
+      "server_ip": "111.111.111.111"
     },
     {
       "id": "112.112.112.112",
