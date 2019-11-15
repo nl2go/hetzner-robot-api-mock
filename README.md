@@ -1,4 +1,4 @@
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/nl2go/hetzner-robot-api-mock)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/nl2go/hetzner-robot-api-mock)](https://hub.docker.com/r/nl2go/hetzner-robot-api-mock)
 
 # Docker Hetzner Robot API Mock
 
