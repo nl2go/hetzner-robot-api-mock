@@ -1,6 +1,8 @@
 {
   "/boot/rescue": "/rescue",
   "/boot/:id/rescue": "/rescue/:id",
+  "/reset": "/reset",
+  "/reset/:id": "/reset/:id",
   "/firewall/template": "/firewall_template",
   "/firewall/template/:id": "/firewall_template/:id",
   "/firewall": "/firewall",
