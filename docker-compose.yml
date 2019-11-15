@@ -1,6 +1,7 @@
 version: '3'
 services:
   hetzner-robot-api-mock:
-    image: nl2go/hetzner-robot-api-mock
+    build:
+      context: ./
     ports:
       - "3000:3000"
