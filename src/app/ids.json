@@ -1,4 +1,5 @@
 {
   "firewall":  "server_ip",
-  "rescue": "server_ip"
+  "rescue": "server_ip",
+  "reset": "server_ip"
 }
