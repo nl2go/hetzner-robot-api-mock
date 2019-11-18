@@ -6,3 +6,4 @@
 /node_modules/
 /test/db.json
 /db.json
+/coverage
