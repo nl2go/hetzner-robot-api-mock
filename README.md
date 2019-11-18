@@ -1,6 +1,8 @@
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/nl2go/hetzner-robot-api-mock)](https://hub.docker.com/r/nl2go/hetzner-robot-api-mock)
+[![Travis (.org) branch](https://img.shields.io/travis/nl2go/hetzner-robot-api-mock/master)](https://travis-ci.org/nl2go/hetzner-robot-api-mock)
+[![Codecov](https://img.shields.io/codecov/c/github/nl2go/hetzner-robot-api-mock)](https://codecov.io/gh/nl2go/hetzner-robot-api-mock)
+[![Docker Pulls](https://img.shields.io/docker/pulls/nl2go/hetzner-robot-api-mock)](https://hub.docker.com/r/nl2go/hetzner-robot-api-mock)
 
-# Docker Hetzner Robot API Mock
+# Hetzner Robot API Mock
 
 A HTTP server based on [JSON Server](https://github.com/typicode/json-server) that mocks [Hetzner Robot API](https://robot.your-server.de/doc/webservice/en.html).
 
