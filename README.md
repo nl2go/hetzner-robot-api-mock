@@ -28,7 +28,7 @@ A HTTP server based on [JSON Server](https://github.com/typicode/json-server) th
 
 ## Authentication
 
-Use username `robot` and password `secret` credentials to authenticate.
+Use username `robot` and password `secret` to authenticate.
 
 ## Development
 
