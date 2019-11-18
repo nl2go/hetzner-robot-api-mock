@@ -11,3 +11,10 @@ install:
 
 script:
   - npm test
+
+after_success:
+  - docker build . -t "nl2go/hetzner-robot-api-mock:$TRAVIS_BRANCH"
+
+deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push "nl2go/hetzner-robot-api-mock:$TRAVIS_BRANCH"
