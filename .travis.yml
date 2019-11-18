@@ -11,6 +11,8 @@ install:
 
 script:
   - npm test
+  - npm run coverage
+  - npm prune --production
 
 after_success:
   - docker build . -t "nl2go/hetzner-robot-api-mock:$TRAVIS_BRANCH"

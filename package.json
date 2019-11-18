@@ -8,11 +8,14 @@
     "process": "latest"
   },
   "devDependencies": {
+    "codecov": "^3.6.1",
     "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
     "request": "^2.88.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "nyc --reporter=lcov mocha",
+    "coverage": "codecov"
   },
   "repository": "https://github.com/nl2go/docker-hetzner-robot-api-mock.git",
   "license": "MIT"

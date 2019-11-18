@@ -8,12 +8,7 @@ COPY ./src/ /app/src
 COPY ./test/ /app/test
 COPY ./package.json /app/package.json
 COPY ./package-lock.json /app/package-lock.json
-
-WORKDIR /app
-
-RUN npm install \
-  && npm test \
-  && npm prune --production
+COPY ./node_modules /app/node_modules
 
 EXPOSE 3000
 
