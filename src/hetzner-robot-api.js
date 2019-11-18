@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const customRoutes = require('./routes.json');
 const customIds = require('./ids.json');
 const defaults = require('./defaults');
+const basicAuth = require('express-basic-auth');
+const users = { 'robot': 'secret' };
 
 function getWrappedResponseBodyWithEntityType(req, responseBody){
   const entityType = getResourceType(req);
@@ -136,6 +138,9 @@ function init(router){
     responseBody = getWrappedResponseBodyWithEntityType(req,  responseBody);
     res.jsonp(responseBody);
   };
+  server.use(basicAuth({
+    users: users
+  }));
   server.use(jsonServer.rewriter(customRoutes));
   applyRequestMiddlewareToCustomRoutes();
   server.use(middlewares);

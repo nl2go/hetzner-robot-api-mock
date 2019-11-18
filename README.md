@@ -26,6 +26,10 @@ A HTTP server based on [JSON Server](https://github.com/typicode/json-server) th
 | `POST /firewall/template/{template-id}` | [post-firewall-template-template-id](https://robot.your-server.de/doc/webservice/de.html#post-firewall-template-template-id) |
 | `DELETE /firewall/template/{template-id}` | [delete-firewall-template-template-id](https://robot.your-server.de/doc/webservice/de.html#delete-firewall-template-template-id) |
 
+## Authentication
+
+Use username `robot` and password `secret` credentials to authenticate.
+
 ## Development
 
 Bootstrap

@@ -35,35 +35,35 @@ for (const resourceType in resources){
   describe(resourceType, function () {
     it('Create', function (done) {
       randomIpAsIdIfCustomIdField(idKey, data);
-      request.post({'url': url, 'form': data}, function (error, response, body) {
+      auth(request.post({'url': url, 'form': data}, function (error, response, body) {
         assert.equal(201, response.statusCode);
         const actualData = toJson(body)[resourceType];
         delete actualData['id'];
         assert.deepEqual(actualData, data);
         done();
-      });
+      }));
     });
 
     it('Get', function (done) {
       randomIpAsIdIfCustomIdField(idKey, data);
-      request.post({'url': url, 'form': data}, function (error, response, body) {
+      auth(request.post({'url': url, 'form': data}, function (error, response, body) {
         const actualData = toJson(body)[resourceType];
-        request.get(url + '/' + actualData[idKey], function (error, response, body) {
+        auth(request.get(url + '/' + actualData[idKey], function (error, response, body) {
           assert.equal(200, response.statusCode);
           const actualData = toJson(body)[resourceType];
           delete actualData['id'];
           assert.deepEqual(actualData, data);
           done();
-        });
-      });
+        }));
+      }));
     });
 
     it('Update', function (done) {
       randomIpAsIdIfCustomIdField(idKey, data);
-      request.post({'url': url, 'form': data}, function (error, response, body) {
+      auth(request.post({'url': url, 'form': data}, function (error, response, body) {
         const actualData = toJson(body)[resourceType];
         actualData['foo'] = 'bar';
-        request.post({'url': url + '/' + actualData[idKey], 'form': actualData}, function (error, response, body) {
+        auth(request.post({'url': url + '/' + actualData[idKey], 'form': actualData}, function (error, response, body) {
           assert.equal(200, response.statusCode);
           const actualData = toJson(body)[resourceType];
           assert.equal(actualData['foo'], 'bar');
@@ -71,15 +71,15 @@ for (const resourceType in resources){
           delete actualData['foo'];
           assert.deepEqual(actualData, data);
           done();
-        });
-      });
+        }));
+      }));
     });
 
     it('Delete', function (done) {
       randomIpAsIdIfCustomIdField(idKey, data);
-      request.post({'url': url, 'form': data}, function (error, response, body) {
+      auth(request.post({'url': url, 'form': data}, function (error, response, body) {
         const actualData = toJson(body)[resourceType];
-        request.delete(url + '/'  + actualData[idKey], function (error, response, body) {
+        auth(request.delete(url + '/'  + actualData[idKey], function (error, response, body) {
           assert.equal(200, response.statusCode);
           if(defaultData){
             const actualData = toJson(body)[resourceType];
@@ -91,10 +91,14 @@ for (const resourceType in resources){
             assert.deepEqual(toJson(body), emptyData);
           }
           done();
-        });
-      });
+        }));
+      }));
     });
   });
+}
+
+function auth(request){
+  return request.auth('robot', 'secret', true);
 }
 
 function randomIpAsIdIfCustomIdField(idKey, data){
