@@ -1,0 +1,13 @@
+language: node_js
+
+node_js:
+  - 13
+
+services:
+  - docker
+
+install:
+  - npm install
+
+script:
+  - npm test
