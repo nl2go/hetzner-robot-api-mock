@@ -6,7 +6,38 @@
 
 A HTTP server based on [JSON Server](https://github.com/typicode/json-server) that mocks [Hetzner Robot API](https://robot.your-server.de/doc/webservice/en.html).
 
+## Implemented Endpoints
+
+| Name | API Reference |
+|------|------|
+| `GET /reset` | [get-reset](https://robot.your-server.de/doc/webservice/de.html#reset) |
+| `GET /reset/{server-ip}` | [get-reset-server-ip](https://robot.your-server.de/doc/webservice/de.html#get-reset-server-ip) |
+| `POST /reset/{server-ip}` | [post-reset-server-ip](https://robot.your-server.de/doc/webservice/de.html#post-reset-server-ip) |
+| `GET /boot/{server-ip}/rescue` | [get-boot-server-ip-rescue](https://robot.your-server.de/doc/webservice/de.html#get-boot-server-ip-rescue) |
+| `POST /boot/{server-ip}/rescue` | [post-boot-server-ip-rescue](https://robot.your-server.de/doc/webservice/de.html#post-boot-server-ip-rescue) |
+| `DELETE /boot/{server-ip}/rescue` | [delete-boot-server-ip-rescue](https://robot.your-server.de/doc/webservice/de.html#delete-boot-server-ip-rescue) |
+| `GET /firewall/{server-ip}` | [get-firewall-server-ip](https://robot.your-server.de/doc/webservice/de.html#get-firewall-server-ip) |
+| `POST /firewall/{server-ip}` | [post-firewall-server-ip](https://robot.your-server.de/doc/webservice/de.html#post-firewall-server-ip) |
+| `DELETE /firewall/{server-ip}` | [delete-firewall-server-ip](https://robot.your-server.de/doc/webservice/de.html#delete-firewall-server-ip) |
+| `GET /firewall/template` | [get-firewall-template](https://robot.your-server.de/doc/webservice/de.html#get-firewall-template) |
+| `POST /firewall/template` | [post-firewall-template](https://robot.your-server.de/doc/webservice/de.html#post-firewall-template) |
+| `GET /firewall/template/{template-id}` | [get-firewall-template-template-id](https://robot.your-server.de/doc/webservice/de.html#get-firewall-template-template-id) |
+| `POST /firewall/template/{template-id}` | [post-firewall-template-template-id](https://robot.your-server.de/doc/webservice/de.html#post-firewall-template-template-id) |
+| `DELETE /firewall/template/{template-id}` | [delete-firewall-template-template-id](https://robot.your-server.de/doc/webservice/de.html#delete-firewall-template-template-id) |
+
 ## Development
+
+Bootstrap
+
+    npm install
+    
+Run tests
+    
+    npm test
+    
+Run locally
+
+    cd /src/ && node index.js
 
 Run locally built image
 
@@ -15,33 +46,6 @@ Run locally built image
 Rebuild image
 
     docker-compose build
-
-## Examples
-
-### Create Firewall Template
-```
-curl -u user:password http://localhost:3000/firewall/template \
---data-urlencode 'name=My new template' \
---data-urlencode 'whitelist_hos=true' \
---data-urlencode 'is_default=false' \
---data-urlencode 'rules[input][0][name]=rule 1' \
---data-urlencode 'rules[input][0][ip_version]=ipv4' \
---data-urlencode 'rules[input][0][src_ip]=1.1.1.1' \
---data-urlencode 'rules[input][0][dst_port]=80' \
---data-urlencode 'rules[input][0][action]=accept'
-```
-
-### Configure Firewall
-```
-curl -u user:password http://localhost:3000/firewall/111.111.111.111 \
---data-urlencode 'status=disabled' \
---data-urlencode 'whitelist_hos=true' \
---data-urlencode 'rules[input][0][name]=rule 1' \
---data-urlencode 'rules[input][0][ip_version]=ipv4' \
---data-urlencode 'rules[input][0][src_ip]=1.1.1.1' \
---data-urlencode 'rules[input][0][dst_port]=80' \
---data-urlencode 'rules[input][0][action]=accept'
-```
 
 ## Maintainers
 
