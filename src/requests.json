@@ -1,0 +1,8 @@
+{
+  "firewall_template": {
+    "alwaysUpdate": false
+  },
+  "firewall": {
+    "alwaysUpdate": false
+  }
+}

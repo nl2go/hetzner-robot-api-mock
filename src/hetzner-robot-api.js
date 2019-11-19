@@ -7,6 +7,7 @@ const customRoutes = require('./routes.json');
 const customIds = require('./ids.json');
 const defaults = require('./defaults');
 const responsesConfig = require('./responses');
+const requestsConfig = require('./requests');
 const basicAuth = require('express-basic-auth');
 const users = { 'robot': 'secret' };
 
@@ -126,6 +127,16 @@ function isWrapResponse(resourceType){
   return true;
 }
 
+function isAlwaysUpdateResource(req){
+  const resourceType = getResourceType(req);
+  const requestConfig = requestsConfig[resourceType];
+  if(requestConfig){
+    return requestConfig.alwaysUpdate !== false
+  }
+
+  return true;
+}
+
 function handleHetznerRobotApiRequest(req, res, next){
   req.custom_params = req.params;
   req.custom_path = req.baseUrl;
@@ -133,7 +144,11 @@ function handleHetznerRobotApiRequest(req, res, next){
   if (isCreateOrUpdateRequest(req)) {
     addCustomIdToRequestBody(req);
     if (isPostUpdateRequest(req)) {
-      changeToPatchRequest(req);
+      if(isAlwaysUpdateResource(req)) {
+        changeToPatchRequest(req);
+      } else {
+        changeToPutRequest(req);
+      }
     }
   } else if (isDeleteRequest(req)){
     const resourceDefaults = getResourceDefaults(req);
