@@ -7,6 +7,7 @@ const request = require('request');
 const assert = require('assert');
 const baseUrl = 'http://localhost:' + port;
 const resources = require('./resources');
+const responsesConfig = require('../src/responses');
 const fs = require('fs');
 
 let describe = mocha.describe;
@@ -28,7 +29,7 @@ after(function () {
 for (const resourceType in resources){
   const definition = resources[resourceType];
   const data = definition['data'];
-  const idKey = definition['id'];
+  const idKey = definition['id'] || 'id';
   const defaultData = definition['defaultData'];
   const url = baseUrl + '/' + resourceType;
 
@@ -37,7 +38,7 @@ for (const resourceType in resources){
       randomIpAsIdIfCustomIdField(idKey, data);
       auth(request.post({'url': url, 'form': data}, function (error, response, body) {
         assert.equal(201, response.statusCode);
-        const actualData = toJson(body)[resourceType];
+        const actualData = getBodyAsJson(body, resourceType);
         delete actualData['id'];
         assert.deepEqual(actualData, data);
         done();
@@ -47,10 +48,10 @@ for (const resourceType in resources){
     it('Get', function (done) {
       randomIpAsIdIfCustomIdField(idKey, data);
       auth(request.post({'url': url, 'form': data}, function (error, response, body) {
-        const actualData = toJson(body)[resourceType];
+        const actualData = getBodyAsJson(body, resourceType);
         auth(request.get(url + '/' + actualData[idKey], function (error, response, body) {
           assert.equal(200, response.statusCode);
-          const actualData = toJson(body)[resourceType];
+          const actualData = getBodyAsJson(body, resourceType);
           delete actualData['id'];
           assert.deepEqual(actualData, data);
           done();
@@ -61,11 +62,11 @@ for (const resourceType in resources){
     it('Update', function (done) {
       randomIpAsIdIfCustomIdField(idKey, data);
       auth(request.post({'url': url, 'form': data}, function (error, response, body) {
-        const actualData = toJson(body)[resourceType];
+        const actualData = getBodyAsJson(body, resourceType);
         actualData['foo'] = 'bar';
         auth(request.post({'url': url + '/' + actualData[idKey], 'form': actualData}, function (error, response, body) {
           assert.equal(200, response.statusCode);
-          const actualData = toJson(body)[resourceType];
+          const actualData = getBodyAsJson(body, resourceType);
           assert.equal(actualData['foo'], 'bar');
           delete actualData['id'];
           delete actualData['foo'];
@@ -78,16 +79,15 @@ for (const resourceType in resources){
     it('Delete', function (done) {
       randomIpAsIdIfCustomIdField(idKey, data);
       auth(request.post({'url': url, 'form': data}, function (error, response, body) {
-        const actualData = toJson(body)[resourceType];
+        const actualData = getBodyAsJson(body, resourceType);
         auth(request.delete(url + '/'  + actualData[idKey], function (error, response, body) {
           assert.equal(200, response.statusCode);
           if(defaultData){
-            const actualData = toJson(body)[resourceType];
+            const actualData = getBodyAsJson(body, resourceType);
             delete actualData[idKey];
             assert.deepEqual(actualData, defaultData);
           } else {
-            const emptyData = {};
-            emptyData[resourceType] = {};
+            const emptyData = getEmptyBodyAsJson(resourceType);
             assert.deepEqual(toJson(body), emptyData);
           }
           done();
@@ -125,5 +125,30 @@ function initFileDatabase(resources){
     data[resourceType] = [];
   }
   fs.writeFileSync(databaseFilePath, JSON.stringify(data));
+}
+
+function getBodyAsJson(body, resourceType){
+  if(isWrapResponse(resourceType)){
+    return toJson(body)[resourceType];
+  }
+  return toJson(body);
+}
+
+function getEmptyBodyAsJson(resourceType){
+  if(isWrapResponse(resourceType)){
+    const emptyData = {};
+    emptyData[resourceType] = {};
+    return emptyData;
+  }
+  return {};
+}
+
+function isWrapResponse(resourceType){
+  const responseConfig = responsesConfig[resourceType];
+  if(responseConfig){
+    return responseConfig.wrap !== false
+  }
+
+  return true;
 }
 

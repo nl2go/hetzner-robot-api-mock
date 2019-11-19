@@ -1,4 +1,11 @@
 {
+  "vswitch": {
+    "data": {
+      "name":"my vSwitch",
+      "vlan":4000,
+      "cancelled":"false"
+    }
+  },
   "reset": {
     "id": "server_ip",
     "data": {

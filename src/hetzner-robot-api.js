@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const customRoutes = require('./routes.json');
 const customIds = require('./ids.json');
 const defaults = require('./defaults');
+const responsesConfig = require('./responses');
 const basicAuth = require('express-basic-auth');
 const users = { 'robot': 'secret' };
 
@@ -105,6 +106,15 @@ function applyRequestMiddlewareToCustomRoutes(){
   }
 }
 
+function isWrapResponse(resourceType){
+  const responseConfig = responsesConfig[resourceType];
+  if(responseConfig){
+    return responseConfig.wrap !== false
+  }
+
+  return true;
+}
+
 function handleHetznerRobotApiRequest(req, res, next){
   req.custom_params = req.params;
   req.custom_path = req.baseUrl;
@@ -135,7 +145,9 @@ function init(router){
     let responseBody = res.locals.data;
     let resourceType = getResourceType(req);
     responseBody = removeInternalIdsFromResponseBody(resourceType, responseBody);
-    responseBody = getWrappedResponseBodyWithEntityType(req,  responseBody);
+    if(isWrapResponse(resourceType)) {
+      responseBody = getWrappedResponseBodyWithEntityType(req, responseBody);
+    }
     res.jsonp(responseBody);
   };
   server.use(basicAuth({

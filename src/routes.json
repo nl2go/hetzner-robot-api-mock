@@ -6,5 +6,7 @@
   "/firewall/template": "/firewall_template",
   "/firewall/template/:id": "/firewall_template/:id",
   "/firewall": "/firewall",
-  "/firewall/:id": "/firewall/:id"
+  "/firewall/:id": "/firewall/:id",
+  "/vswitch": "/vswitch",
+  "/vswitch/:id": "/vswitch/:id"
 }

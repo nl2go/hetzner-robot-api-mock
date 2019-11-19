@@ -25,6 +25,12 @@ A HTTP server based on [JSON Server](https://github.com/typicode/json-server) th
 | `GET /firewall/template/{template-id}` | [get-firewall-template-template-id](https://robot.your-server.de/doc/webservice/de.html#get-firewall-template-template-id) |
 | `POST /firewall/template/{template-id}` | [post-firewall-template-template-id](https://robot.your-server.de/doc/webservice/de.html#post-firewall-template-template-id) |
 | `DELETE /firewall/template/{template-id}` | [delete-firewall-template-template-id](https://robot.your-server.de/doc/webservice/de.html#delete-firewall-template-template-id) |
+| `GET /vswitch` | [get-vswitch](https://robot.your-server.de/doc/webservice/de.html#get-vswitch) |
+| `POST /vswitch` | [post-vswitch](https://robot.your-server.de/doc/webservice/de.html#post-vswitch) |
+| `GET /vswitch/{vswitch-id}` | [get-vswitch-vswitch-id](https://robot.your-server.de/doc/webservice/de.html#get-vswitch-vswitch-id) |
+| `POST /vswitch/{vswitch-id}` | [post-vswitch-vswitch-id](https://robot.your-server.de/doc/webservice/de.html#post-vswitch-vswitch-id) |
+| `DELETE /vswitch/{vswitch-id}` | [delete-vswitch-vswitch-id](https://robot.your-server.de/doc/webservice/de.html#delete-vswitch-vswitch-id) |
+
 
 ## Authentication
 
