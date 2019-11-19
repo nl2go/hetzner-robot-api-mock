@@ -45,6 +45,20 @@ for (const resourceType in resources){
       }));
     });
 
+    it('Get All', function (done) {
+      randomIpAsIdIfCustomIdField(idKey, data);
+      auth(request.post({'url': url, 'form': data}, function (error, response, body) {
+        const actualData = getBodyAsJson(body, resourceType);
+        auth(request.get(url, function (error, response, body) {
+          assert.equal(200, response.statusCode);
+          const actualData = getBodyAsJson(body, resourceType);
+          assert.equal(actualData instanceof Array, true);
+          assert.equal(actualData.length >=1, true);
+          done();
+        }));
+      }));
+    });
+
     it('Get', function (done) {
       randomIpAsIdIfCustomIdField(idKey, data);
       auth(request.post({'url': url, 'form': data}, function (error, response, body) {
@@ -128,10 +142,19 @@ function initFileDatabase(resources){
 }
 
 function getBodyAsJson(body, resourceType){
+  const bodyJson = toJson(body);
+
   if(isWrapResponse(resourceType)){
-    return toJson(body)[resourceType];
+    if(bodyJson instanceof Array) {
+      const result = [];
+      for (const i in bodyJson){
+        result.push(bodyJson[i][resourceType])
+      }
+      return result;
+    }
+    return bodyJson[resourceType];
   }
-  return toJson(body);
+  return bodyJson;
 }
 
 function getEmptyBodyAsJson(resourceType){

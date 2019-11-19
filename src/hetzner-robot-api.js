@@ -10,10 +10,21 @@ const responsesConfig = require('./responses');
 const basicAuth = require('express-basic-auth');
 const users = { 'robot': 'secret' };
 
-function getWrappedResponseBodyWithEntityType(req, responseBody){
+function getWrappedResponseBody(req, responseBody){
   const entityType = getResourceType(req);
+  if(responseBody instanceof Array){
+    const result = [];
+    for(const i in responseBody){
+      result.push(wrapObjWithEntityType(responseBody[i], entityType))
+    }
+    return result;
+  }
+  return wrapObjWithEntityType(responseBody, entityType);
+}
+
+function wrapObjWithEntityType(obj, entityType){
   const wrappedResponseBody = {};
-  wrappedResponseBody[entityType] = responseBody;
+  wrappedResponseBody[entityType] = obj;
   return wrappedResponseBody;
 }
 
@@ -146,7 +157,7 @@ function init(router){
     let resourceType = getResourceType(req);
     responseBody = removeInternalIdsFromResponseBody(resourceType, responseBody);
     if(isWrapResponse(resourceType)) {
-      responseBody = getWrappedResponseBodyWithEntityType(req, responseBody);
+      responseBody = getWrappedResponseBody(req, responseBody);
     }
     res.jsonp(responseBody);
   };
