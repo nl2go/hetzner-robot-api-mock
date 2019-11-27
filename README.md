@@ -30,6 +30,8 @@ A HTTP server based on [JSON Server](https://github.com/typicode/json-server) th
 | `GET /vswitch/{vswitch-id}` | [get-vswitch-vswitch-id](https://robot.your-server.de/doc/webservice/de.html#get-vswitch-vswitch-id) |
 | `POST /vswitch/{vswitch-id}` | [post-vswitch-vswitch-id](https://robot.your-server.de/doc/webservice/de.html#post-vswitch-vswitch-id) |
 | `DELETE /vswitch/{vswitch-id}` | [delete-vswitch-vswitch-id](https://robot.your-server.de/doc/webservice/de.html#delete-vswitch-vswitch-id) |
+| `GET /server/{server-ip}` | [get-server-server-ip](https://robot.your-server.de/doc/webservice/de.html#get-server-server-ip) |
+| `POST /server/{server-ip}` | [post-server-server-ip](https://robot.your-server.de/doc/webservice/de.html#post-server-server-ip) |
 
 
 ## Authentication
