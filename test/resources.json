@@ -93,10 +93,10 @@
       "product": "DS 3000",
       "dc": "NBG1-DC1",
       "traffic": "5 TB",
-      "flatrate": true,
+      "flatrate": "true",
       "status": "ready",
-      "throttled": true,
-      "cancelled": false,
+      "throttled": "true",
+      "cancelled": "false",
       "paid_until": "2010-09-02",
       "ip": [
         "123.123.123.123"
