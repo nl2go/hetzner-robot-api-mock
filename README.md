@@ -1,5 +1,6 @@
 [![Travis (.org) branch](https://img.shields.io/travis/nl2go/hetzner-robot-api-mock/master)](https://travis-ci.org/nl2go/hetzner-robot-api-mock)
 [![Codecov](https://img.shields.io/codecov/c/github/nl2go/hetzner-robot-api-mock)](https://codecov.io/gh/nl2go/hetzner-robot-api-mock)
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/nl2go/hetzner-robot-api-mock)
 [![Docker Pulls](https://img.shields.io/docker/pulls/nl2go/hetzner-robot-api-mock)](https://hub.docker.com/r/nl2go/hetzner-robot-api-mock)
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/nl2go/hetzner-robot-api-mock)](https://hub.docker.com/repository/docker/nl2go/hetzner-robot-api-mock/tags?page=1)
 
