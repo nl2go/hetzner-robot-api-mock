@@ -168,9 +168,9 @@ function handleHetznerRobotApiRequest(req, res, next){
   next();
 }
 
-function init(router){
-  if(!router){
-    router = defaultRouter;
+function init(customRouter){
+  if(customRouter){
+    router = customRouter;
   }
   server.use(bodyParser.urlencoded({ extended: true }));
   server.use(bodyParser.json());
@@ -197,7 +197,6 @@ function init(router){
 }
 
 exports.listen = function(port, customRouter){
-  router = customRouter;
   init(customRouter);
   return server.listen(port, () => {
     console.log('Hetzner Robot API Mock is running')
