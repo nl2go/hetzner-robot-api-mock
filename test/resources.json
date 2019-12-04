@@ -3,7 +3,13 @@
     "data": {
       "name": "my vSwitch",
       "vlan": 4000,
-      "cancelled": "false"
+      "cancelled": "false",
+      "server": [
+        {
+          "server_ip": "123.123.123.123",
+          "status": "ready"
+        }
+      ]
     }
   },
   "reset": {

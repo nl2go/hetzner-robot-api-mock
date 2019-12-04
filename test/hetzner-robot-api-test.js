@@ -17,7 +17,7 @@ let it = mocha.it;
 let httpServer;
 
 before(function () {
-  initFileDatabase(resources)
+  initFileDatabase(resources);
   const router = jsonServer.router(databaseFilePath);
   httpServer = hetznerRobotApi.listen(port, router);
 });
@@ -26,7 +26,7 @@ after(function () {
   httpServer.close();
 });
 
-for (const resourceType in resources){
+for (const resourceType in resources) {
   const definition = resources[resourceType];
   const data = definition['data'];
   const idKey = definition['id'] || 'id';
@@ -78,7 +78,10 @@ for (const resourceType in resources){
       auth(request.post({'url': url, 'form': data}, function (error, response, body) {
         const actualData = getBodyAsJson(body, resourceType);
         actualData['foo'] = 'bar';
-        auth(request.post({'url': url + '/' + actualData[idKey], 'form': actualData}, function (error, response, body) {
+        auth(request.post({
+          'url': url + '/' + actualData[idKey],
+          'form': actualData
+        }, function (error, response, body) {
           assert.equal(200, response.statusCode);
           const actualData = getBodyAsJson(body, resourceType);
           assert.equal(actualData['foo'], 'bar');
@@ -108,6 +111,50 @@ for (const resourceType in resources){
         }));
       }));
     });
+
+    if (resourceType === 'vswitch') {
+      it('Add Server', function (done) {
+        const servers = {'server': ["111.111.111.111"]};
+        randomIpAsIdIfCustomIdField(idKey, data);
+        auth(request.post({'url': url, 'form': data}, function (error, response, body) {
+          assert.equal(201, response.statusCode);
+          const actualData = getBodyAsJson(body, resourceType);
+          auth(request.post({
+            'url': url + '/' + actualData[idKey] + '/server',
+            'form': servers
+          }, function (error, response, body) {
+            assert.equal(200, response.statusCode);
+            const expectedData = clone(data);
+            expectedData['server'].push({'server_ip': '111.111.111.111', 'status': 'ready'});
+            const actualData = getBodyAsJson(body, resourceType);
+            delete actualData['id'];
+            assert.deepEqual(expectedData, actualData);
+            done();
+          }));
+        }));
+      });
+
+      it('Remove Server', function (done) {
+        const servers = {'server': ["123.123.123.123"]};
+        randomIpAsIdIfCustomIdField(idKey, data);
+        auth(request.post({'url': url, 'form': data}, function (error, response, body) {
+          assert.equal(201, response.statusCode);
+          const actualData = getBodyAsJson(body, resourceType);
+          auth(request.delete({
+            'url': url + '/' + actualData[idKey] + '/server',
+            'form': servers
+          }, function (error, response, body) {
+            assert.equal(200, response.statusCode);
+            const expectedData = clone(data);
+            expectedData['server'] = [];
+            const actualData = getBodyAsJson(body, resourceType);
+            delete actualData['id'];
+            assert.deepEqual(expectedData, actualData);
+            done();
+          }));
+        }));
+      });
+    }
   });
 }
 
@@ -125,6 +172,10 @@ function toJson(str) {
   return JSON.parse(str);
 }
 
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 function randomIp(){
   return randomOctet() + '.' + randomOctet() + '.' + randomOctet() + '.' + randomOctet();
 }
@@ -135,7 +186,7 @@ function randomOctet(){
 
 function initFileDatabase(resources){
   let data = {};
-  for (resourceType in resources){
+  for (const resourceType in resources){
     data[resourceType] = [];
   }
   fs.writeFileSync(databaseFilePath, JSON.stringify(data));

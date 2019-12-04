@@ -10,6 +10,8 @@ const responsesConfig = require('./responses');
 const requestsConfig = require('./requests');
 const basicAuth = require('express-basic-auth');
 const users = { 'robot': 'secret' };
+const vSwitchRequestHandler = require('./vswitch-request-handler');
+let router = defaultRouter;
 
 function getWrappedResponseBody(req, responseBody){
   const entityType = getResourceType(req);
@@ -31,7 +33,7 @@ function wrapObjWithEntityType(obj, entityType){
 
 function getResourceType(req){
   const resourceId = getResourceId(req);
-  const path = req.custom_path;
+  const path = req.rewritePath;
   if(resourceId){
     return getPathPartFromEnd(path, 1)
   }
@@ -85,7 +87,7 @@ function clone(obj) {
 }
 
 function getResourceId(req){
-  return req.custom_params ? req.custom_params.id : undefined;
+  return req.originalParams ? req.originalParams.id : undefined;
 }
 
 function addCustomIdToRequestBody(req){
@@ -138,26 +140,31 @@ function isAlwaysUpdateResource(req){
 }
 
 function handleHetznerRobotApiRequest(req, res, next){
-  req.custom_params = req.params;
-  req.custom_path = req.baseUrl;
+  req.originalParams = req.params;
+  req.rewritePath = req.baseUrl;
 
   if (isCreateOrUpdateRequest(req)) {
     addCustomIdToRequestBody(req);
     if (isPostUpdateRequest(req)) {
-      if(isAlwaysUpdateResource(req)) {
+      if (isAlwaysUpdateResource(req)) {
         changeToPatchRequest(req);
       } else {
         changeToPutRequest(req);
       }
     }
-  } else if (isDeleteRequest(req)){
+  } else if (isDeleteRequest(req)) {
     const resourceDefaults = getResourceDefaults(req);
-    if(resourceDefaults){
+    if (resourceDefaults) {
       setBodyToResourceDefaults(req, resourceDefaults);
       addCustomIdToRequestBody(req);
       changeToPutRequest(req);
     }
   }
+
+  if (vSwitchRequestHandler.matches(req)){
+    vSwitchRequestHandler.handle(req, router.db);
+  }
+
   next();
 }
 
@@ -179,14 +186,19 @@ function init(router){
   server.use(basicAuth({
     users: users
   }));
+  server.use(function(req, res, next){
+    req.originalPath = req.url;
+    next();
+  });
   server.use(jsonServer.rewriter(customRoutes));
   applyRequestMiddlewareToCustomRoutes();
   server.use(middlewares);
   server.use(router);
 }
 
-exports.listen = function(port, router){
-  init(router);
+exports.listen = function(port, customRouter){
+  router = customRouter;
+  init(customRouter);
   return server.listen(port, () => {
     console.log('Hetzner Robot API Mock is running')
   });
