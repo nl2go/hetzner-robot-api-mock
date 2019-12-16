@@ -11,5 +11,7 @@
   "/vswitch/:id": "/vswitch/:id",
   "/vswitch/:id/server": "/vswitch/:id",
   "/server": "/server",
-  "/server/:id": "/server/:id"
+  "/server/:id": "/server/:id",
+  "/key": "/key",
+  "/key/:id": "/key/:id"
 }

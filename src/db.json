@@ -4,5 +4,6 @@
   "reset": [],
   "firewall_template": [],
   "firewall": [],
-  "server": []
+  "server": [],
+  "key": []
 }

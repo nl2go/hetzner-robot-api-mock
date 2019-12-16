@@ -2,5 +2,6 @@
   "firewall":  "server_ip",
   "rescue": "server_ip",
   "reset": "server_ip",
-  "server": "server_ip"
+  "server": "server_ip",
+  "key": "fingerprint"
 }

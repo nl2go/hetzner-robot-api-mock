@@ -114,5 +114,15 @@
         }
       ]
     }
+  },
+  "key": {
+    "id": "fingerprint",
+    "data": {
+      "name": "key",
+      "fingerprint": "15:28:b0:03:95:f0:77:b3:10:56:15:6b:77:22:a5:bb",
+      "type": "ED25519",
+      "size": 256,
+      "data": "ssh-ed25519 AAAAC3NzaC1 ..."
+    }
   }
 }
