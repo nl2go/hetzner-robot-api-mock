@@ -33,7 +33,11 @@ A HTTP server based on [JSON Server](https://github.com/typicode/json-server) th
 | `DELETE /vswitch/{vswitch-id}` | [delete-vswitch-vswitch-id](https://robot.your-server.de/doc/webservice/de.html#delete-vswitch-vswitch-id) |
 | `GET /server/{server-ip}` | [get-server-server-ip](https://robot.your-server.de/doc/webservice/de.html#get-server-server-ip) |
 | `POST /server/{server-ip}` | [post-server-server-ip](https://robot.your-server.de/doc/webservice/de.html#post-server-server-ip) |
-
+| `GET /key` | [get-key](https://robot.your-server.de/doc/webservice/de.html#get-key) |
+| `POST /key` | [post-key](https://robot.your-server.de/doc/webservice/de.html#post-key) |
+| `GET /key/{fingerprint}` | [get-key-fingerprint](https://robot.your-server.de/doc/webservice/de.html#get-key-fingerprint) |
+| `POST /key/{fingerprint}` | [post-key-fingerprint](https://robot.your-server.de/doc/webservice/de.html#post-key-fingerprint) |
+| `DELETE /key/{fingerprint}` | [delete-key-fingerprint](https://robot.your-server.de/doc/webservice/de.html#delete-key-fingerprint) |
 
 ## Authentication
 
