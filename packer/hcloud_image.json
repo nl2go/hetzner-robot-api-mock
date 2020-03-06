@@ -1,0 +1,24 @@
+{
+  "variables": {
+    "hcloud_token": "{{env `HCLOUD_TOKEN`}}"
+  },
+  "builders": [
+    {
+      "type": "hcloud",
+      "token": "{{user `hcloud_token` }}",
+      "image": "ubuntu-16.04",
+      "location": "nbg1",
+      "server_type": "cx11",
+      "ssh_username": "root",
+      "server_name": "hetzner-robot-api-mock-{{timestamp}}",
+      "snapshot_name": "hetzner-robot-api-mock-{{timestamp}}",
+      "snapshot_labels": {"type": "hetzner-robot-api-mock"}
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "hcloud_provisioner.sh"
+    }
+  ]
+}
