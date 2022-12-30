@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "codecov": "^3.6.5",
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "nyc": "^14.1.1",
     "request": "^2.88.0"
   },
